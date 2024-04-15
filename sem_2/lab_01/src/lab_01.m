@@ -5,7 +5,7 @@ function lab_01()
     delay = 0;
     a = 0;
     b = 1;
-    eps = 0.000001;
+    eps = 0.01;
 
     fplot(@f, [a, b]);
     hold on;
@@ -15,11 +15,15 @@ function lab_01()
 end
 
 function [x0, f0] = bitwiseSearch(a, b, eps, debugFlg, delay)
-    i = 0;
+    i = 1;
     x0 = a;
     f0 = f(x0);
     delta = (b - a) / 4;
-
+    
+    if debugFlg
+        fprintf('N = %2d:   x0 = %.10f;   f(x0) = %.10f;\n', i, x0, f0);
+    end
+    
     plot_x = [];
     plot_f = [];
     while true
@@ -28,7 +32,7 @@ function [x0, f0] = bitwiseSearch(a, b, eps, debugFlg, delay)
         f1 = f(x1);
 
         if debugFlg
-            fprintf('Шаг %2d:   x1 = %.10f;   f(x1) = %.10f;\n', i, x1, f1);
+            fprintf('N = %2d:   x1 = %.10f;   f(x1) = %.10f;\n', i, x1, f1);
 
             plot_x(end + 1) = x1;
             plot_f(end + 1) = f1;
