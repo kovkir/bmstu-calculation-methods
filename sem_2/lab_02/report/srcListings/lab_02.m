@@ -59,7 +59,7 @@ function lab_02()
     end
 
     scatter(xStar, fStar, 'r', 'filled');
-    fprintf('\nОтвет:   x* = %.10f;   f(x*) = %.10f.\n\n', xStar, fStar);
+    fprintf('\nОтвет:   N = %2d;   x* = %.10f;   f(x*) = %.10f.\n\n', N, xStar, fStar);
 end
 
 function y = f(x)
