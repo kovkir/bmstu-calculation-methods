@@ -123,16 +123,13 @@ function lab_03()
             if x_line > x2
                 x1 = x2; 
                 f1 = f2;
-
-                x2 = x_line; 
-                f2 = f_line;
             else
                 x3 = x2; 
                 f3 = f2;
-
-                x2 = x_line; 
-                f2 = f_line;
             end
+
+            x2 = x_line; 
+            f2 = f_line;
 
             prev_x_line = x_line;
 
