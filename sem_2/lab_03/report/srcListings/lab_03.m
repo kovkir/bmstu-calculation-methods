@@ -6,7 +6,7 @@ function lab_03()
     eps = 1e-6;
 
     debugFlag = true;
-    delay = 0.5;
+    delay = 1;
 
     fplot(@f, [a, b]);
     hold on;
@@ -69,10 +69,12 @@ function lab_03()
                     break;
                 end
             end
+        
             N = N + 1;
         else
             xStar = (a + b) / 2;
-            fStar= f(xStar);
+            fStar = f(xStar);
+
             N = N + 1;
             scatter(xStar, fStar, 'r', 'filled');
             fprintf('\nОтвет:   x* = %.10f;   f(x*) = %.10f.\n\n', xStar, fStar);
@@ -81,30 +83,38 @@ function lab_03()
     end
 
     N = N + 1;
+
     if debugFlag
         fprintf('N = %2d:   a = %.10f;   b = %.10f;\n\n', N, a, b);
         line([a b], [f(a) f(b)]);
         pause(delay);
+
         scatter(x1, f1, 'b', 'filled');
         scatter(x2, f2, 'b', 'filled');
         scatter(x3, f3, 'b', 'filled');
-        fprintf('x1 = %.10f\nx2 = %.10f\nx3 = %.10f\n\n', x1, x2, x3);
         line([x1 x3], [f1 f3], 'color', 'b');
         pause(delay);
     end
 
+    fprintf('x1 = %.10f\nx2 = %.10f\nx3 = %.10f\n\n', x1, x2, x3);
     fprintf('Метод парабол:\n\n');
 
     a1 = (f2 - f1) ./ (x2 - x1);
     a2 = ((f3 - f1) ./ (x3 - x1) - (f2 - f1) ./ (x2 - x1)) ./ (x3 - x2);
     x_line = 1 / 2 .* (x1 + x2 - a1 ./ a2);
     f_line = f(x_line);
-    it = 1;
+    N = N + 1;
 
+    if debugFlag
+        plot(x_line, f_line, 'xk');
+        pause(delay);
+    end
+
+    it = 1;
     while true 
         if it == 1 || abs(prev_x_line - x_line) > eps
             it = it + 1;
-        
+
             if f_line > f2
                 temp = f_line; 
                 f_line = f2; 
@@ -114,35 +124,45 @@ function lab_03()
                 x_line = x2; 
                 x2 = temp;
             end
-
+    
             if x_line > x2
                 x1 = x2; 
                 f1 = f2;
-
-                x2 = x_line; 
-                f2 = f_line;
             else
                 x3 = x2; 
                 f3 = f2;
+            end
 
-                x2 = x_line; 
-                f2 = f_line;
+            x2 = x_line; 
+            f2 = f_line;
+            
+            if debugFlag
+                hold off;
+                fplot(@f, [0, 1]);
+                hold on;
+
+                scatter(x1, f1, 'b', 'filled');
+                scatter(x2, f2, 'b', 'filled');
+                scatter(x3, f3, 'b', 'filled');
+                line([x1 x3], [f1 f3], 'color', 'b');
+                pause(delay);
             end
 
             prev_x_line = x_line;
+
             a1 = (f2 - f1) ./ (x2 - x1);
             a2 = ((f3 - f1) ./ (x3 - x1) - (f2 - f1) ./ (x2 - x1)) ./ (x3 - x2);
             x_line = 1 / 2 .* (x1 + x2 - a1 ./ a2);
             f_line = f(x_line);
-
             N = N + 1;
+
             if debugFlag
                 fprintf('Для N = %2d:\n', N);
                 fprintf('x1 = %.10f;   f1 = %.10f;\n', x1, f1);
                 fprintf('x2 = %.10f;   f2 = %.10f;\n', x2, f2);
                 fprintf('x3 = %.10f;   f3 = %.10f;\n', x3, f3);
                 fprintf('Текущее приближение: x = %.10f, f(x) = %.10f\n\n', x_line, f_line);
-                line([x1 x3], [f1 f3], 'color', 'b');
+                plot(x_line, f_line, 'xk');
                 pause(delay);
             end
         else
@@ -152,10 +172,8 @@ function lab_03()
         end
     end
     
-    if debugFlag
-        scatter(xStar, fStar, 'r', 'filled');
-        fprintf('Ответ:   x* = %.10f;   f(x*) = %.10f.\n\n', xStar, fStar);
-    end
+    scatter(xStar, fStar, 'r', 'filled');
+    fprintf('Ответ:   x* = %.10f;   f(x*) = %.10f.\n\n', xStar, fStar);
 end
 
 function y = f(x)
