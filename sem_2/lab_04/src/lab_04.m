@@ -13,6 +13,8 @@ function lab_04()
     hold on;
 
     x = (a + b) / 2;
+    % при сдаче лабы 
+    % x = 0.7;
     f2_x0 = (f(x - delta) - 2 * f(x) + f(x + delta)) / power(delta, 2);
     N = 3;
 
@@ -49,4 +51,6 @@ end
 
 function y = f(x)
     y = cosh((3 .* power(x, 3) + 2 .* power(x, 2) - 4 .* x + 5) ./ 3) + tanh((power(x, 3) - 3 .* power(2, 1/2) .* x - 2) ./ (2 .* x + power(2, 1/2))) - 2.5;
+    % при сдаче лабы 
+    % y = exp(abs(x-0.333).^2);
 end
