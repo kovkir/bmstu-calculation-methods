@@ -7,7 +7,7 @@ function lab_04()
     eps = 1e-6;
 
     debugFlag = true;
-    delay = 0.5;
+    delay = 1;
 
     fplot(@f, [a, b]);
     hold on;
@@ -22,7 +22,7 @@ function lab_04()
 
         if debugFlag
             fprintf('N = %2d:   x = %.10f;   f1 = %.10f;\n\n', N, x, f1);
-            scatter(x, f(x), 'b', 'filled');
+            plot(x, f(x), 'xk');
             pause(delay);
         end
 
@@ -41,7 +41,7 @@ function lab_04()
 
     options = optimset('TolX', eps);
     if debugFlag
-        options = optimset(options, 'Display','iter');
+        options = optimset(options, 'Display', 'iter');
     end
     [x_star, f_star] = fminbnd(@f, a, b, options);
     fprintf('fminbnd:   x = %.10f;   f(x) = %.10f.\n\n', x_star, f_star);
